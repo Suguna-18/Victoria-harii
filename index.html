@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#e0245e">
+<meta name="description" content="Shared couple budget tracker">
+<link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Our%20Budget%22,%22short_name%22:%22Budget%22,%22start_url%22:%22./%22,%22display%22:%22standalone%22,%22background_color%22:%22%23ffeef3%22,%22theme_color%22:%22%23e0245e%22,%22orientation%22:%22portrait-primary%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20192%20192%27%3E%3Crect%20fill=%27%23e0245e%27%20width=%27192%27%20height=%27192%27/%3E%3Ctext%20x=%2750%25%27%20y=%2750%25%27%20font-size=%27120%27%20dominant-baseline=%27middle%27%20text-anchor=%27middle%27%20fill=%27%23fff%27%3E❤%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22},{%22src%22:%22data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20512%20512%27%3E%3Crect%20fill=%27%23e0245e%27%20width=%27512%27%20height=%27512%27/%3E%3Ctext%20x=%2750%25%27%20y=%2750%25%27%20font-size=%27300%27%20dominant-baseline=%27middle%27%20text-anchor=%27middle%27%20fill=%27%23fff%27%3E❤%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22512x512%22,%22type%22:%22image/svg+xml%22}]}">
+<title>Our Budget</title>
+<style>
+:root{--bg:#ffeef3;--card:#fff;--ink:#4a1230;--mute:#9a5e75;--line:#f7cfdc;--heart:#e0245e;--soft:#ffd9e6;--bar:#fbd5e1;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2a0f1b;--card:#3a1626;--ink:#ffe6ee;--mute:#d89bb2;--line:#5a2640;--heart:#ff5f8d;--soft:#5a2640;--bar:#5a2640}}
+:root[data-theme="dark"]{--bg:#2a0f1b;--card:#3a1626;--ink:#ffe6ee;--mute:#d89bb2;--line:#5a2640;--heart:#ff5f8d;--soft:#5a2640;--bar:#5a2640}
+html,body{height:100%;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;line-height:1.45;display:flex;flex-direction:column}
+main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;max-width:560px;margin:0 auto;padding:16px;width:100%}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:1.5rem;margin:4px 0 2px}
+.sub{color:var(--mute);font-size:.9rem;margin-bottom:12px}
+.heart{color:var(--heart)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:12px}
+h2{margin:0 0 12px;font-size:1rem;display:flex;justify-content:space-between;align-items:center}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.tabs button{flex:1;min-width:70px;padding:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;font:inherit;font-size:.85rem;cursor:pointer}
+.tabs button.on{background:var(--heart);color:#fff;border-color:var(--heart)}
+.hero{text-align:center;background:var(--heart);color:#fff;border:0}
+.hero .big{font-family:Georgia,serif;font-size:2.4rem;font-weight:700;line-height:1.1}
+.hero .row{color:#ffe0ea;justify-content:center;gap:12px;margin-top:6px;flex-wrap:wrap}
+.row{display:flex;justify-content:space-between;gap:8px;color:var(--mute);font-size:.9rem}
+.bar{height:8px;background:rgba(255,255,255,.3);border-radius:6px;overflow:hidden;margin:10px 0}
+.bar i{display:block;height:100%;background:#fff}
+.bar i.over{background:#ffcccb}
+label{font-size:.8rem;color:var(--mute);display:block;margin-top:8px}
+input,select{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;margin:3px 0 8px}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn{width:100%;padding:12px;border:0;border-radius:12px;background:var(--heart);color:#fff;font:inherit;font-weight:700;cursor:pointer}
+.link{border:1px solid var(--heart);background:none;color:var(--heart);border-radius:999px;padding:4px 12px;font:inherit;font-size:.85rem;cursor:pointer}
+.item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;border-top:1px solid var(--line)}
+.item small{color:var(--mute);display:block;font-size:.8rem}
+.item button{border:0;background:none;color:var(--heart);font-size:1rem;padding:4px 6px;cursor:pointer}
+.p{padding:8px 0;border-top:1px solid var(--line)}
+.p:first-of-type{border-top:0}
+.p .n{font-weight:700}
+.seg{display:flex;gap:6px;margin-bottom:6px}
+.seg button{flex:1;padding:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;font:inherit;font-size:.85rem;cursor:pointer}
+.seg button.on{background:var(--heart);color:#fff;border-color:var(--heart)}
+.empty{color:var(--mute);font-size:.9rem}
+.cat{margin-bottom:18px;padding:10px;border-left:4px solid var(--heart);background:rgba(224,36,94,.05)}
+.cat h3{margin:0 0 8px;font-size:.95rem;color:var(--heart)}
+.cat .stat{display:flex;justify-content:space-between;gap:8px;margin-bottom:8px}
+.cat .stat b{color:var(--ink)}
+.cat .stat span{color:var(--mute);font-size:.85rem}
+.neg{color:#ffb3c1}
+</style>
+</head>
+<body>
+<main>
+<h1><span class="heart">❤</span> Our Budget</h1>
+<div class="sub" id="month"></div>
+<div id="view"></div>
+</main>
+<script>
+var BUDGETS={Petrol:2000,Expenses:3000,Miscellaneous:1500,Savings:5000};
+var now=new Date(),MK="couple-budget-"+now.getFullYear()+"-"+(now.getMonth()+1);
+var P={p:[{name:"Victoriya",salary:22500},{name:"Hari",salary:25000}],split:"salary"};
+var DATA={};
+Object.keys(BUDGETS).forEach(function(c){DATA[c]=[]});
+var cur="overview",editP=false,editB=false,editI=-1;
+try{var a=localStorage.getItem("couple-partners");if(a)P=JSON.parse(a);var b=localStorage.getItem(MK);if(b)DATA=JSON.parse(b);var c=localStorage.getItem("couple-budgets");if(c)BUDGETS=JSON.parse(c)}catch(e){}
+function save(){try{localStorage.setItem("couple-partners",JSON.stringify(P));localStorage.setItem(MK,JSON.stringify(DATA));localStorage.setItem("couple-budgets",JSON.stringify(BUDGETS))}catch(e){}}
+function fmt(n){return Number(n).toLocaleString("en-IN",{maximumFractionDigits:2})}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+document.getElementById("month").textContent=now.toLocaleDateString("en-GB",{month:"long",year:"numeric"})+" · shared together";
+function getTotals(){var t={total:0,by:{}};Object.keys(BUDGETS).forEach(function(c){var s=0;(DATA[c]||[]).forEach(function(e){s+=e.amt});t.total+=s;t.by[c]=s});return t}
+function render(){
+ var tot=P.p[0].salary+P.p[1].salary,totals=getTotals(),h="";
+ var tabs=['<button class="'+(cur==="overview"?"on":"")+'" onclick="cur=\'overview\';render()">Overview</button>'];
+ Object.keys(BUDGETS).forEach(function(c){tabs.push('<button class="'+(cur===c?"on":"")+'" onclick="cur=\''+c+'\';render()">'+c+'</button>')});
+ h+='<div class="tabs">'+tabs.join("")+'</div>';
+ 
+ if(cur==="overview"){
+  // overall balance
+  var left=tot-totals.total,pct=Math.min(100,tot?totals.total/tot*100:0);
+  h+='<div class="card hero"><div>Combined left</div><div class="big'+(left<0?" neg":"")+'">'+fmt(left)+'</div><div class="bar"><i style="width:'+pct+'%"></i></div><div class="row"><span>Salary '+fmt(tot)+'</span><span>Spent '+fmt(totals.total)+'</span></div></div>';
+  // partners
+  h+='<div class="card"><h2><span>Partners</span><button class="link" onclick="editP=!editP;render()">'+(editP?"Done":"Edit")+'</button></h2>';
+  P.p.forEach(function(p,i){
+   var share=P.split==="equal"?totals.total/2:(tot?totals.total*p.salary/tot:0);
+   if(editP)h+='<div class="p"><div class="g"><div><label>Name</label><input value="'+esc(p.name)+'" onchange="setP('+i+',\'name\',this.value)"></div><div><label>Monthly salary</label><input type="number" inputmode="numeric" value="'+p.salary+'" onchange="setP('+i+',\'salary\',this.value)"></div></div></div>';
+   else h+='<div class="p"><div class="row" style="color:var(--ink)"><span class="n"><span class="heart">❤</span> '+esc(p.name)+'</span><span>'+fmt(p.salary)+'</span></div><div class="row"><span>Share '+fmt(share)+'</span><span style="color:var(--heart)">Left '+fmt(p.salary-share)+'</span></div></div>'});
+  h+='<label>Split</label><div class="seg"><button class="'+(P.split==="salary"?"on":"")+'" onclick="setSplit(\'salary\')">By salary</button><button class="'+(P.split==="equal"?"on":"")+'" onclick="setSplit(\'equal\')">50 / 50</button></div></div>';
+  // categories
+  h+='<div class="card"><h2><span>Categories this month</span><button class="link" onclick="editB=!editB;render()">'+(editB?"Done":"Edit")+'</button></h2>';
+  Object.keys(BUDGETS).forEach(function(c){var b=BUDGETS[c],s=totals.by[c],pct=Math.min(100,b?s/b*100:0),over=s>b;
+   if(editB)h+='<div class="p"><label>'+c+' budget</label><input type="number" inputmode="numeric" value="'+b+'" onchange="setBudget(\''+c+'\',this.value)"></div>';
+   else h+='<div class="cat"><h3>'+c+'</h3><div class="stat"><div><span>Allocated</span><b>'+fmt(b)+'</b></div><div style="text-align:right"><span>Spent</span><b class="'+(over?"neg":"")+'">'+fmt(s)+'</b></div></div><div class="bar"><i class="'+(over?"over":"")+'" style="width:'+pct+'%"></i></div></div>'});
+  h+='</div>';
+ } else {
+  // category detail
+  var cat=cur,budget=BUDGETS[cat],items=DATA[cat]||[],spent=0;
+  items.forEach(function(e){spent+=e.amt});
+  var left=budget-spent,pct=Math.min(100,budget?spent/budget*100:0);
+  h+='<div class="card hero"><div>Left for '+cat+'</div><div class="big'+(left<0?" neg":"")+'">'+fmt(left)+'</div><div class="bar"><i class="'+(left<0?"over":"")+'" style="width:'+pct+'%"></i></div><div class="row"><span><button class="link" style="padding:2px 6px;font-size:.75rem;border-color:#ffe0ea;color:#ffe0ea" onclick="editB=!editB;render()">Budget '+fmt(budget)+''+(editB?'':'')+' </button></span><span>Spent '+fmt(spent)+'</span></div></div>';
+  if(editB)h+='<div class="card"><label>Budget for '+cat+'</label><input type="number" inputmode="numeric" id="budgetEdit" value="'+budget+'" onchange="setBudget(\''+cat+'\',this.value);editB=false;render()"><button class="btn" onclick="setBudget(\''+cat+'\',document.getElementById(\'budgetEdit\').value);editB=false;render()">Update budget</button></div>';
+  // form
+  var ed=editI>=0?items[editI]:null;
+  h+='<div class="card"><h2 style="flex-direction:column;align-items:flex-start">'+(ed?'<span style="font-size:.8rem;color:var(--mute);margin-bottom:4px">✎ Editing</span>':'')+'<span>'+(ed?"Change amount":"Add to "+cat)+'</span></h2><label>Amount</label><input id="a" type="number" inputmode="decimal" placeholder="0" value="'+(ed?ed.amt:"")+'"><label>Note (optional)</label><input id="n" placeholder="e.g. Regular refill" value="'+(ed?esc(ed.note):"")+'"><button class="btn" onclick="addCat(\''+cat+'\');">'+(ed?"Update amount":"Add expense")+'</button>'+(ed?'<button class="link" style="margin-top:8px;width:100%" onclick="editI=-1;render()">Cancel</button>':"")+'</div>';
+  // list
+  h+='<div class="card"><h2>'+cat+' expenses</h2>';
+  if(!items.length)h+='<div class="empty">No expenses yet. Add one above.</div>';
+  else items.map(function(e,i){return{e:e,i:i}}).reverse().forEach(function(x){var isEditing=editI===x.i;h+='<div class="item" style="'+(isEditing?'background:rgba(224,36,94,.1);padding:9px;margin:0 -14px;border-radius:8px':'')+'"><div>'+esc(x.e.note||cat)+'<small>'+x.e.date+'</small></div><div style="text-align:right;display:flex;align-items:center;justify-content:flex-end;gap:4px"><b style="cursor:pointer;padding:4px 6px;border-radius:6px;border-bottom:2px dotted var(--heart);'+(isEditing?'background:#fff;color:var(--heart);font-weight:900':'')+';" onclick="editI='+x.i+';render();window.scrollTo(0,0)">−'+fmt(x.e.amt)+'</b><button onclick="editI='+x.i+';render();window.scrollTo(0,0)" aria-label="Edit" style="margin-left:4px">✎</button><button onclick="delCat(\''+cat+'\','+x.i+')" aria-label="Delete">✕</button></div></div>'});
+  h+='</div>';
+ }
+ document.getElementById("view").innerHTML=h;
+}
+function setP(i,k,v){P.p[i][k]=k==="salary"?(parseFloat(v)||0):(v.trim()||P.p[i].name);save();render()}
+function setSplit(s){P.split=s;save();render()}
+function setBudget(c,v){BUDGETS[c]=parseFloat(v)||0;save();render()}
+function addCat(c){var a=parseFloat(document.getElementById("a").value);if(!(a>0)){document.getElementById("a").focus();return}
+ var o={amt:a,note:document.getElementById("n").value.trim(),date:editI>=0?DATA[c][editI].date:new Date().toLocaleDateString("en-GB",{day:"numeric",month:"short"})};
+ if(editI>=0){DATA[c][editI]=o;editI=-1}else DATA[c].push(o);save();render()}
+function delCat(c,i){DATA[c].splice(i,1);editI=-1;save();render()}
+render();
+if('serviceWorker' in navigator){navigator.serviceWorker.register('data:text/javascript,self.addEventListener("install",e=>self.skipWaiting());self.addEventListener("activate",e=>e.waitUntil(clients.claim()));').catch(function(){})}
+</script>
+</body>
+</html>
